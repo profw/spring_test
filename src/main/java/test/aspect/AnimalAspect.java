@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+import test.Animal;
 import test.dto.Food;
 
 import java.time.LocalDateTime;
@@ -49,18 +50,25 @@ public class AnimalAspect {
 
     @Around(value = "eatPoint() && args(food) && !fishPoint()")
     public Object eatAround(ProceedingJoinPoint proceedingJoinPoint, Food food) throws Throwable {
-        String target = proceedingJoinPoint.getTarget().getClass().toString();
+        Object target = proceedingJoinPoint.getTarget();
+        String targetName = target.getClass().toString();
         if (LocalDateTime.now().isAfter(food.getExpirationDate())){
+            System.out.println("Food " + food.getFoodName() + " is expired!");
             return false;
         }
-        System.out.println(target + " start eat");
+        System.out.println(targetName + " start eat");
         try {
-            Object result = proceedingJoinPoint.proceed();
-            System.out.println(target + " eat success");
-            System.out.println(target + " end eat");
-            return result;
+            Animal animal = (Animal)target;
+            if (animal.allowedFoodTypes().contains(food.getType())) {
+                Object result = proceedingJoinPoint.proceed();
+                System.out.println(targetName + " end eat");
+                return result;
+            } else {
+                System.out.println(targetName + " can't eat " + food.getFoodName());
+            }
+            return false;
         } catch (Throwable e) {
-            System.out.println(target + " eat failed: " + e.getMessage());
+            System.out.println(targetName + " eat failed: " + e.getMessage());
             throw e;
         }
     }

@@ -3,22 +3,17 @@ package test;
 import org.springframework.stereotype.Component;
 import test.dto.Food;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
-public class Fish implements Animal {
-    private boolean angry = true;
-
-    @Override
-    public void voice() {
+public class Fish extends AbstractAnimal{
+    public Fish() {
+        sound = "";
     }
 
     @Override
-    public boolean eat(Food food) {
-        angry = false;
-        return isAngry();
-    }
-
-    @Override
-    public boolean isAngry() {
-        return angry;
+    public List<Food.Type> allowedFoodTypes() {
+        return Arrays.asList(Food.Type.SEAFOOD);
     }
 }

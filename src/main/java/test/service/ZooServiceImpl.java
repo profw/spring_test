@@ -27,4 +27,13 @@ public class ZooServiceImpl implements ZooService {
                 .collect(Collectors.toList());
         System.out.println(angryAnimals);
     }
+
+    @Override
+    public void voice() {
+        zoo.getAnimals()
+                .stream()
+                .filter(Animal::isAngry)
+                .forEach(Animal::voice);
+
+    }
 }

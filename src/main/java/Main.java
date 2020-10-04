@@ -3,6 +3,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import test.Zoo;
 import test.configuration.AnnotationConfiguration;
 import test.dto.Food;
+import test.job.JobService;
 import test.service.ZooService;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,8 @@ public class Main {
 
     public static void main(String[] args) {
         ApplicationContext context = getAnnotationContext();
-        feedAnimal(context);
+        JobService service = context.getBean(JobService.class);
+        //feedAnimal(context);
     }
 
     public static void feedAnimal(ApplicationContext context) {

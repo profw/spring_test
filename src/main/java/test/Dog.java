@@ -4,25 +4,20 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import test.dto.Food;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
-public class Dog implements Animal {
-    private boolean angry = true;
-
-    public void voice() {
-        System.out.println("gav");
+public class Dog extends AbstractAnimal {
+    public Dog(){
+        sound = "Woof";
     }
 
     @Override
-    public boolean eat(Food food) {
-        angry = false;
-        return isAngry();
-    }
-
-    @Override
-    public boolean isAngry() {
-        return false;
+    public List<Food.Type> allowedFoodTypes() {
+        return Arrays.asList(Food.Type.ALL);
     }
 }
