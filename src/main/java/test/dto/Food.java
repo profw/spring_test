@@ -38,4 +38,10 @@ public class Food {
     public void setType(Type type) {
         this.type = type;
     }
+
+
+    @Override
+    public String toString() {
+        return getType() + " :: " + getFoodName();
+    }
 }

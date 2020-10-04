@@ -2,24 +2,41 @@ package test;
 
 import test.dto.Food;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 public abstract class AbstractAnimal implements Animal{
-    protected boolean angry = true;
+    protected boolean hungry = true;
     protected String sound;
+    protected int hungryMin = 1;
+    private LocalDateTime nextHungry = LocalDateTime.now();
+
 
     @Override
     public boolean eat(Food food) {
-        angry = false;
-        return isAngry();
+        if (food == null)
+            return false;
+        hungry = false;
+        System.out.println(this.getClass() + " EAT " + food);
+        nextHungry = getNextHungry().plus(hungryMin, ChronoUnit.MINUTES);
+        return isHungry();
     }
 
     @Override
-    public boolean isAngry() {
-        return angry;
+    public boolean isHungry() {
+        if (LocalDateTime.now().isAfter(nextHungry)) {
+            hungry = true;
+        }
+        return hungry;
     }
 
 
     @Override
     public void voice() {
         System.out.println(this.getClass().toString() + ": " + sound);
+    }
+
+    public LocalDateTime getNextHungry() {
+        return nextHungry;
     }
 }

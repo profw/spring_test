@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import test.service.ZooService;
 
 @Service
-public class JobService {
+public class ZooJobService {
     private final ZooService zooService;
 
     @Autowired
-    public JobService(ZooService zooService) {
+    public ZooJobService(ZooService zooService) {
         this.zooService = zooService;
     }
 

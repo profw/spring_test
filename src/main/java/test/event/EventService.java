@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventService {
 
+
     @EventListener(ZooEvent.class)
     public void onApplicationEvent(ZooEvent zooEvent) {
         System.out.println(zooEvent.getMessage());
     }
+
+
 }

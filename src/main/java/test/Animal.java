@@ -2,6 +2,7 @@ package test;
 
 import test.dto.Food;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface Animal {
@@ -11,5 +12,7 @@ public interface Animal {
 
     boolean eat(Food food);
 
-    boolean isAngry();
+    boolean isHungry();
+
+    LocalDateTime getNextHungry();
 }
