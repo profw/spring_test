@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 public class Food {
     public enum Type {
-        ALL,
+        CHICKEN,
+        FISH,
         VEGETARIAN,
         MEAT,
         SEAFOOD,
@@ -42,6 +43,6 @@ public class Food {
 
     @Override
     public String toString() {
-        return getType() + " :: " + getFoodName();
+        return getType() + " :: " + getExpirationDate();
     }
 }

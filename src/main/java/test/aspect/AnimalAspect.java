@@ -31,48 +31,34 @@ public class AnimalAspect {
     public void fishPoint() {
     }
 
-    /*
-    @Before(value = "eatPoint()")
-    public void beforeEat() {
-        System.out.println("start eat");
-    }
-
-    @After(value = "eatPoint()")
-    public void afterEat() {
-        System.out.println("end eat");
-    }
-     */
 
     @AfterThrowing(value = "eatPoint()", throwing = "ex")
     public void eatFailed(Throwable ex) {
         System.out.println("eat failed: " + ex.getMessage());
     }
 
-    /*
-    @AfterReturning(value = "eatPoint()")
-    public void eatSuccess(JoinPoint joinPoint) {
-        System.out.println("eat success");
-    }
-     */
 
     @Around(value = "eatPoint() && args(food)")
     public Object eatAround(ProceedingJoinPoint proceedingJoinPoint, Food food) throws Throwable {
         Object target = proceedingJoinPoint.getTarget();
         String targetName = target.getClass().toString();
 
-        //is food expired
+        //is food not present
         if (food == null) {
             return false;
         }
-        if (LocalDateTime.now().isAfter(food.getExpirationDate())){
-            System.out.println("Food " + food.getFoodName() + " is expired!");
+
+        //validate expired food
+        if (LocalDateTime.now().isAfter(food.getExpirationDate())) {
+            System.out.println("Food " + food.getType() + " is expired!");
+            //remove expired food
             foodBox.poll();
             return false;
         }
-        //System.out.println(targetName + " start eat");
+
         try {
-            Animal animal = (Animal)target;
-            //try to
+            Animal animal = (Animal) target;
+            //if animal supports this kind of food
             if (animal.allowedFoodTypes().contains(food.getType())) {
                 Object result = proceedingJoinPoint.proceed();
                 System.out.println(targetName + " eat complete");
@@ -80,7 +66,9 @@ public class AnimalAspect {
                 return result;
             } else {
                 System.out.println(targetName + " can't eat " + food);
+                //poll from queue start
                 Food notAcceptedFood = foodBox.poll();
+                //put to the queue end
                 foodBox.add(notAcceptedFood);
             }
 
@@ -90,16 +78,4 @@ public class AnimalAspect {
             throw e;
         }
     }
-
-    /*
-    @Around(value = "eatPoint() && args(food) && fishPoint()")
-    public Object validateEatForFish(ProceedingJoinPoint proceedingJoinPoint, Food food) throws Throwable {
-        if (Objects.equals(food.getFoodName(), "fish")) {
-            return false;
-        } else {
-            return eatAround(proceedingJoinPoint, food);
-        }
-    }
-
-     */
 }

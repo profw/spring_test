@@ -14,6 +14,6 @@ public class Fish extends AbstractAnimal{
 
     @Override
     public List<Food.Type> allowedFoodTypes() {
-        return Arrays.asList(Food.Type.SEAFOOD);
+        return Arrays.asList(Food.Type.SEAFOOD, Food.Type.FISH);
     }
 }

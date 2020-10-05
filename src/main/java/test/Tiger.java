@@ -14,6 +14,6 @@ public class Tiger extends AbstractAnimal{
 
     @Override
     public List<Food.Type> allowedFoodTypes() {
-        return Arrays.asList(Food.Type.MEAT);
+        return Arrays.asList(Food.Type.MEAT, Food.Type.CHICKEN);
     }
 }

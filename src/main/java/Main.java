@@ -24,7 +24,7 @@ public class Main {
         ZooService service = context.getBean(ZooService.class);
         Food food = new Food();
         food.setFoodName("fish");
-        food.setExpirationDate(LocalDateTime.now().plusHours(6));
+        food.setExpirationDate(LocalDateTime.now().plusMinutes(1));
         service.feed(food);
     }
 

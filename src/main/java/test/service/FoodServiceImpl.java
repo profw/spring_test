@@ -13,7 +13,6 @@ import test.event.HungryEvent;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.*;
 
 @Service
@@ -60,6 +59,12 @@ public class FoodServiceImpl implements FoodService {
             System.out.println("New food added to box: " + newFood + " TOTAL: " + foodBox.size());
 
         }
+    }
+
+    @Scheduled(fixedDelay = 30000)
+    public void cleanExpired() {
+        List<Food> expired = foodBox.cleanExpired();
+        System.out.println("Scheduled FoodBox clean performed: " + expired);
     }
 
 

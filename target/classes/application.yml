@@ -1,2 +1,3 @@
 zoo.name: Mishutka
-foodService.refillAmount: 5
+foodService.refillAmount: 4
+foodBox.maxSize: 30
